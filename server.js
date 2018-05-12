@@ -1,50 +1,21 @@
-//require dependecies
-var 
-	express = require('express'),
-	bodyParser = require('body-parser');
-
-var app = express();
+const express = require("express");
+const bodyParser = require('body-parser'); 
+const router = require('./server/router'); 
+const app = express();
+ 
+app.use(express.static(__dirname + '/public'));
 
 //parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended:false}));
-app.use(express.static(__dirname))
 
-app.get('/', (req,res) => {
-		res.send('index.html');
+//parse application/json
+app.use(bodyParser.json());
+
+//sets the the router
+app.use('/',router); 
+
+const server = app.listen(3000, function() {
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log('Example app listening at http://%s:%s', host, port);
 });
-
-app.use('/new/:url', (req,res) => {
-	const
-	url = req.params.url
-	res.send() 
-});
-
-app.use('/:short', (req,res) => {
-	const
-	query = req.params.date
-	res.send() 
-});
-
-const urlCheck = (url) => {
-
-}
-
-
-
-function parseDate (query) {
-	console.log(query)
-	if(query === query.match(/[0-9]+/)[0]) {
-		num = parseInt(query, 10);
-		return dateObj(num,(new Date(num * 1000)).toDateString());
-	}
-	else if(query.match(/[a-zA-z]+\s[0-9]{2},\s[0-9]{4}/)) {
-		date = new Date(query)
-		return dateObj(Math.round(date.getTime()/1000),query);
-	}
-	else {
-		return dateObj(null,null);
-	}
-}
-
-
-app.listen(8080);
