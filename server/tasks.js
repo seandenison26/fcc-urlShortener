@@ -1,11 +1,9 @@
 const 
 	http = require('http'),
 	dbOptions = {
-		hostname:'127.0.0.1',
-		port: '5984',
-		path: '/lbb_dev',
-		Authorization: `Basic ${new Buffer.from('lbbDev:secret').toString('base64')}`,
-		Referer: 'localhost'
+		hostname:'star-pelican.glitch.me',
+		port: '443',
+		path: '/url-short',
 	}
 
 //desired middle ware, 
@@ -34,8 +32,7 @@ const dbRequest = (options, body = null) => {
 const reqOptions = (method, headers, path = dbOptions.path) => {
 	let
        		newOptions = JSON.parse(JSON.stringify(dbOptions))	
-		h = Object.assign(headers,{"Authorization":newOptions.Authorization})
-	return Object.assign(newOptions, {method,headers:h,path:newOptions.path + path})
+	return Object.assign(newOptions, {method,headers,path:newOptions.path + path})
 }	
 //performs a get request to the DB and returns a JSON view
 const queryDB = (url) => {
@@ -54,7 +51,7 @@ const queryDB = (url) => {
 
 //takes in an array, gets number of UUIDs based upon the length and adds an _id prop to each of the objs
 const addUUID = (objs) => {
-	var url = `http:\/\/127.0.0.1:5984/_uuids?count=${objs.length}`
+	const url = `https:\/\/${DB}/_uuids?count=${objs.length}`
 	return new Promise((res,rej) => {
 		queryDB(url)
 			.then((ids) => {
@@ -66,7 +63,7 @@ const addUUID = (objs) => {
 
 //get single document by ID 
 const getDocByID = (id) => {
-	const url = `http:\/\/${DB}/${id}`
+	const url = `https:\/\/${DB}/${id}`
 				console.log(url)
 	return new Promise((res,rej) => {
 		queryDB(url)

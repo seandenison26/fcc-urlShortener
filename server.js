@@ -1,8 +1,9 @@
-const express = require("express");
+const express = require('express');
 const bodyParser = require('body-parser'); 
 const router = require('./server/router'); 
 const app = express();
  
+//set static
 app.use(express.static(__dirname + '/public'));
 
 //parse application/x-www-form-urlencoded
