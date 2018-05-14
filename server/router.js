@@ -2,6 +2,7 @@
 const 
 	path = require('path'),
 	express = require('express'),
+	db = require('./db'),
 	tasks = require('./tasks')
 
 //creates router
@@ -11,48 +12,45 @@ var rootDir = __dirname + '/../'
 
 //routes the react app
 router.get('/', (req, res) => {
-
-	res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+	res.sendFile(path.resolve(__dirname, '../public', 'index.html'))
 });
 
+//build two views, one for all the urls, one for all the shortened urls
+//
 //currently set up to eventually use Promis.all, currently will just save the first doc
-router.get('/new', (req, res) => {
-	console.log('GET')
-	const url = 'Whaddup World'//req.params.url,
-	doc = {
-		old_url:url
-	}	
-	res.send(doc)	
-	/*
-	tasks.addUUID(Array.of(url))
-	.then((docs) => tasks.putDoc(docs[0]))
+router.get('/new/:url', (req, res) => {
+	console.log(req.params.url)
+	//check to make sure it's a url
+	//check to see it's already been added?
+	//insert into db
+	//return short doc
+	
+	const url = req.params.url
+	Promise.resolve(tasks.checkUrl(url))
+	//tasks.createShortUrlDoc(url)
+	//tasks.checkForDoc(url)	
+/*
+	.then((docs) => db.putDoc(docs))
+*/
 	.then((doc) => { res.send(doc) })
 	.catch((err) => {
 		console.log(err)
 		res.send(new Error(`Unable to create doc. Error:${err}`))
 	});
-	*/
-});
 
-//update a doc
-router.put('/api/updateDoc', (req, res) => {
-	tasks.putDoc(req.body)
-		.then((newDoc) => {
-			console.log('UPDATE SUCCESS')
-			res.send(newDoc)
-		})
-		.catch((err) => {console.log(err),res.send(err)});
-});
+	 
+})
 
 //flag a doc as deleted
-router.delete('/api/deleteDoc', (req, res) => {
-	tasks.delDoc(req.body)
+router.delete('/:shortUrl', (req, res) => {
+	/*
+	db.delDoc(req.body)
 		.then((newDoc) => {
 			console.log('DELETE SUCCESS')
 			res.send(newDoc)
 		})
 		.catch((err) => {console.log(err),res.send(err)});
-});
+	*/
+})
 //exports the router
-module.exports = router;
-
+module.exports = router
