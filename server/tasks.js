@@ -7,13 +7,14 @@ const checkUrl = (url) => {
 }
 
 const createShortUrlDoc = (url) => {
-	const _id = uuidv3(url, uuidv3.URL)
+	const _id = uuidv3(url, uuidv3.URL),
 
-	return {
+	doc = {
 		_id: _id,
 		old_url: url,
-		shortUrl: `${_id.split('-')[0]}`
-	}
+		shortUrl: `${_id.split('-')[0].toUpperCase()}`
+	} 
+	return doc
 }
 
 const tasks = {checkUrl,createShortUrlDoc}
