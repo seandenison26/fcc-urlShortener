@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 //build two views, one for all the urls, one for all the shortened urls
 //
 //currently set up to eventually use Promis.all, currently will just save the first doc
-router.get('/new/:url', (req, res) => {
+router.get('/new/:url(*)', (req, res) => {
 	console.log(req.params.url)
 	//check to make sure it's a url
 	//check to see it's already been added?
