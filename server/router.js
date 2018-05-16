@@ -26,7 +26,8 @@ router.get('/new/:url(*)', (req, res) => {
 	
 	const url = req.params.url
 	Promise.resolve(tasks.checkUrl(url))
-	.then((url) => tasks.createShortUrlDoc(url))
+	.then(url => tasks.createShortUrlDoc(url))
+	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	//.then(tasks.checkForDoc(url))	
 /*
 	.then((docs) => db.putDoc(docs))
@@ -34,7 +35,6 @@ router.get('/new/:url(*)', (req, res) => {
 	.then((doc) => { 
 		console.log(doc)
 		res.send(doc) 
-	
 	})
 	.catch((err) => {
 		res.send(new Error(`Unable to create doc. Error:${err}`))

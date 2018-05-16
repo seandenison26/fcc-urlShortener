@@ -12,11 +12,16 @@ const createShortUrlDoc = (url) => {
 	doc = {
 		_id: _id,
 		old_url: url,
-		shortUrl: `${_id.split('-')[0].toUpperCase()}`
+		short_code: `${_id.split('-')[0].toUpperCase()}`
 	} 
 	return doc
 }
 
-const tasks = {checkUrl,createShortUrlDoc}
+const clientDocDisplay = (host,urlDoc) => {
+	console.log(urlDoc)
+	return {old_url:urlDoc.old_url, new_url:`http:\/\/${host}\/${urlDoc.short_code}`}
+}
+
+const tasks = {checkUrl,createShortUrlDoc,clientDocDisplay}
 
 module.exports = tasks
