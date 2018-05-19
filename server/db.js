@@ -90,6 +90,7 @@ const getDocByID = (id) => {
 
 //updates a doc based on _id and _rev 
 const putDoc = (doc) => {
+	console.log('Doc:',doc)
 	const
        		path = `/${doc._id}/`	
 		body = JSON.stringify(doc),

@@ -17,11 +17,17 @@ const checkUrl = (url) => {
 const checkForUrl = async (url) => {
 	try {
 		const doc = await db.getView('urls',url)
-	 	console.log(doc.rows)
-		return url
+				console.log(doc)
+		if(!doc.error && doc.rows.length < 1) {
+				return url 
+		}
+		else {
+			console.log(url,'error')
+			throw Error("CODE_IN_DB")
+		}
 	}
 	catch(e) {
-		throw Error('Bad URL check')
+		throw Error('BAD_URLS_VIEW_CHECK')
 	}	
 }
 
