@@ -17,7 +17,7 @@ const checkUrl = (url) => {
 const checkForUrl = async (url) => {
 	try {
 		const doc = await db.getView('urls',url)
-	 	console.log(doc)
+	 	console.log(doc.rows)
 		return url
 	}
 	catch(e) {
