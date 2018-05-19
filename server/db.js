@@ -63,15 +63,12 @@ const addUUID = (objs) => {
 }
 
 //gets view from the db
-const getView = (key,viewUrl) => {
+const getView = (view, key = null) => {
+	console.log(view,key)
 	return new Promise((res,rej) => {
-/*
-		queryDB(reqOptions('GET',{},`/_design/short_codes/urls?key=${key}`))
-			.then(view) => {
-				res(view)
-			})
+		queryDB(reqOptions('GET',{},`/_design/short_codes/_view/${view}?key=${key}`))
+			.then(view => { res(view) })
 			.catch(rej)		
-		*/
 	})
 }
 
@@ -128,6 +125,6 @@ const delDoc = (doc) => {
 	})
 }
 
-const db = {addUUID,putDoc,delDoc,getDocByID}
+const db = {getView,addUUID,putDoc,delDoc,getDocByID}
 
 module.exports =  db

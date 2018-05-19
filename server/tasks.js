@@ -14,10 +14,15 @@ const checkUrl = (url) => {
 		throw Error("INVALID_URL")
 }
 
-const async checkforDoc = (url) => {
-	const doc = await db.getView(url,view)
-	console.log(doc)
-	return url
+const checkForUrl = async (url) => {
+	try {
+		const doc = await db.getView('urls',url)
+	 	console.log(doc)
+		return url
+	}
+	catch(e) {
+		throw Error('Bad URL check')
+	}	
 }
 
 
@@ -35,6 +40,6 @@ const createShortUrlDoc = (url) => {
 
 const clientDocDisplay = (host,urlDoc) => { return {old_url:urlDoc.old_url, new_url:`http:\/\/${host}\/${urlDoc.short_code}`} }
 
-const tasks = {checkforDoc,checkUrl,createShortUrlDoc,clientDocDisplay}
+const tasks = {checkForUrl,checkUrl,createShortUrlDoc,clientDocDisplay}
 
 module.exports = tasks
