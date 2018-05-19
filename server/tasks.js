@@ -3,8 +3,11 @@ const
 
 const checkUrl = (url) => {
 	const check = new RegExp(/^https?:\/\/[0-9a-zA-Z]+.\S+/)
-	return check.test(url) ? url : new Error("INVALID_URL")
-}
+	if(check.test(url)) 
+		return url 
+	else
+		throw Error("INVALID_URL")
+	}
 
 const createShortUrlDoc = (url) => {
 	const _id = uuidv3(url, uuidv3.URL),
@@ -17,10 +20,7 @@ const createShortUrlDoc = (url) => {
 	return doc
 }
 
-const clientDocDisplay = (host,urlDoc) => {
-	console.log(urlDoc)
-	return {old_url:urlDoc.old_url, new_url:`http:\/\/${host}\/${urlDoc.short_code}`}
-}
+const clientDocDisplay = (host,urlDoc) => { return {old_url:urlDoc.old_url, new_url:`http:\/\/${host}\/${urlDoc.short_code}`} }
 
 const tasks = {checkUrl,createShortUrlDoc,clientDocDisplay}
 

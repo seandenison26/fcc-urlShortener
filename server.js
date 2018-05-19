@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser'); 
 const router = require('./server/router'); 
+const handleClientErrors = require('./server/errors'); 
 const app = express();
  
 //set static
@@ -15,7 +16,9 @@ app.use(bodyParser.json());
 //app.use((req,res,next) => {console.log(req.params.url), next()})
 
 //sets the the router
-app.use('/',router); 
+app.use('/',router) 
+//sets the ckuebt error handler
+app.use(handleClientErrors) 
 
 const server = app.listen(3000, function() {
   const host = server.address().address;

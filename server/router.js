@@ -19,25 +19,25 @@ router.get('/', (req, res) => {
 //
 //currently set up to eventually use Promis.all, currently will just save the first doc
 router.get('/new/:url(*)', (req, res) => {
-	//check to make sure it's a url
 	//check to see it's already been added?
 	//insert into db
-	//return short doc
 	
 	const url = req.params.url
-	Promise.resolve(tasks.checkUrl(url))
+
+	Promise.resolve(
+	tasks.checkUrl(url))
 	.then(url => tasks.createShortUrlDoc(url))
+	.then(docs => db.putDoc(docs))
+	//.then(doc =>  doc)
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	//.then(tasks.checkForDoc(url))	
-/*
-	.then((docs) => db.putDoc(docs))
-*/
 	.then((doc) => { 
-		console.log(doc)
-		res.send(doc) 
-	})
+		console.log('sent')	
+	res.send(doc) 
+			})
 	.catch((err) => {
-		res.send(new Error(`Unable to create doc. Error:${err}`))
+		console.log(err)
+		res.send(`Unable to create doc. Error:/*${err.message}*/`)
 	})
 })
 
