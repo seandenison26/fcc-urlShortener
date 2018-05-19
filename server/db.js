@@ -12,7 +12,7 @@ const
 const dbRequest = (options, body = null) => {
 	console.log(`Req: ${options.method} `, body) 
 	return new Promise((res,rej) => {
-		const req = http.request(options, (data) => {
+		const req = https.request(options, (data) => {
 			console.log(options)
 			let rawData = '' 
 			data.setEncoding('utf8')
@@ -79,7 +79,6 @@ const getDocByID = (id) => {
 
 //updates a doc based on _id and _rev 
 const putDoc = (doc) => {
-	console.log('put')
 	const
        		path = `/${doc._id}/`	
 		body = JSON.stringify(doc),
