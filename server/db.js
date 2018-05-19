@@ -62,6 +62,20 @@ const addUUID = (objs) => {
 	})
 }
 
+//gets view from the db
+const getView = (key,viewUrl) => {
+	return new Promise((res,rej) => {
+/*
+		queryDB(reqOptions('GET',{},`/_design/short_codes/urls?key=${key}`))
+			.then(view) => {
+				res(view)
+			})
+			.catch(rej)		
+		*/
+	})
+}
+
+
 //get single document by ID 
 const getDocByID = (id) => {
 	const url = `https:\/\/${DB}/${id}`

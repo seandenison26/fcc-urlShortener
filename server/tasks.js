@@ -1,5 +1,10 @@
+
 const
+	db = require('./db'),
 	uuidv3 = require('uuid/v3')
+
+
+
 
 const checkUrl = (url) => {
 	const check = new RegExp(/^https?:\/\/[0-9a-zA-Z]+.\S+/)
@@ -7,7 +12,14 @@ const checkUrl = (url) => {
 		return url 
 	else
 		throw Error("INVALID_URL")
-	}
+}
+
+const async checkforDoc = (url) => {
+	const doc = await db.getView(url,view)
+	console.log(doc)
+	return url
+}
+
 
 const createShortUrlDoc = (url) => {
 	const _id = uuidv3(url, uuidv3.URL),
@@ -20,8 +32,9 @@ const createShortUrlDoc = (url) => {
 	return doc
 }
 
+
 const clientDocDisplay = (host,urlDoc) => { return {old_url:urlDoc.old_url, new_url:`http:\/\/${host}\/${urlDoc.short_code}`} }
 
-const tasks = {checkUrl,createShortUrlDoc,clientDocDisplay}
+const tasks = {checkforDoc,checkUrl,createShortUrlDoc,clientDocDisplay}
 
 module.exports = tasks

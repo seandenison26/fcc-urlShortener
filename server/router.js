@@ -26,14 +26,14 @@ router.get('/new/:url(*)', (req, res) => {
 
 	Promise.resolve(
 	tasks.checkUrl(url))
+	.then(tasks.checkForDoc(url))	
 	.then(url => tasks.createShortUrlDoc(url))
 	.then(docs => db.putDoc(docs))
 	//.then(doc =>  doc)
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
-	//.then(tasks.checkForDoc(url))	
 	.then((doc) => { 
 		console.log('sent')	
-	res.send(doc) 
+		res.send(doc) 
 			})
 	.catch((err) => {
 		console.log(err)
