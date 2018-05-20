@@ -11,7 +11,7 @@ const checkUrl = (url) => {
 	if(check.test(url)) 
 		return url 
 	else
-		throw Error("INVALID_URL")
+		return Promise.reject(Error('INVALID_URL'))
 }
 
 const checkForUrl = async (url) => {
@@ -23,11 +23,11 @@ const checkForUrl = async (url) => {
 		}
 		else {
 			console.log(url,'error')
-			throw Error("CODE_IN_DB")
+			return Promise.reject(Error('CODE_IN_DB'))
 		}
 	}
 	catch(e) {
-		throw Error('BAD_URLS_VIEW_CHECK')
+		return Promise.reject(Error('BAD_URLS_VIEW_CHECK'))
 	}	
 }
 

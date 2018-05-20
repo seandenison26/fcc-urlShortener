@@ -38,8 +38,7 @@ router.get('/new/:url(*)', (req, res) => {
 		res.send(doc) 
 			})
 	.catch((err) => {
-		console.log(err)
-		res.send(`Unable to create doc. Error:/*${err.message}*/`)
+		res.send(`Unable to create doc. Error:${err.message}`)
 	})
 })
 
