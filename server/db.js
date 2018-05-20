@@ -13,7 +13,7 @@ const dbRequest = (options, body = null) => {
 	console.log(`Req: ${options.method} `, body) 
 	return new Promise((res,rej) => {
 		const req = https.request(options, (data) => {
-			console.log(options)
+			console.log('OPTIONS',options)
 			let rawData = '' 
 			data.setEncoding('utf8')
 			data.on('data', c => rawData += c)
@@ -25,7 +25,7 @@ const dbRequest = (options, body = null) => {
 		})
 		req.on('error', (e) => rej(e))	
 		req.write(body)
-		req.end()
+		req.end(body)
 	})
 }
 
@@ -90,12 +90,12 @@ const getDocByID = (id) => {
 
 //updates a doc based on _id and _rev 
 const putDoc = (doc) => {
-	console.log('Doc:',doc)
 	const
-       		path = `/${doc._id}/`	
-		body = JSON.stringify(doc),
+       		path = `/${doc._id}`	
+		body =  JSON.stringify(doc),
 		method = 'PUT',
 		headers = {
+			'Accept': 'application/json',	
 			'Content-Type': 'application/json',	
 			'Content-Length': `${body.length}`	
 		}

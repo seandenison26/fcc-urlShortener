@@ -15,7 +15,6 @@ const checkUrl = (url) => {
 }
 
 const checkForUrl = async (url) => {
-	try {
 		const doc = await db.getView('urls',url)
 				console.log(doc)
 		if(!doc.error && doc.rows.length < 1) {
@@ -23,12 +22,9 @@ const checkForUrl = async (url) => {
 		}
 		else {
 			console.log(url,'error')
-			return Promise.reject(Error('CODE_IN_DB'))
+			return Promise.reject(Error(doc.rows[0]))
 		}
-	}
-	catch(e) {
-		return Promise.reject(Error('BAD_URLS_VIEW_CHECK'))
-	}	
+		//return Promise.reject(Error('BAD_URLS_VIEW_CHECK'))
 }
 
 

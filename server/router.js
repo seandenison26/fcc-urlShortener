@@ -20,26 +20,18 @@ router.get('/', (req, res) => {
 //currently set up to eventually use Promis.all, currently will just save the first doc
 router.get('/new/:url(*)', (req, res) => {
 	//check to see it's already been added?
-	//insert into db
 	
 	const url = req.params.url
 
 	Promise.resolve(
 	tasks.checkUrl(url))
-	//.then(tasks.checkForUrl(url))	
-	.then(url => tasks.createShortUrlDoc(url))
-	.then(docs => db.putDoc(docs))
-	/*
-	//.then(doc =>  doc)
-	*/
+	.then(tasks.checkForUrl(url))	
+	//.then(url => tasks.createShortUrlDoc(url))
+	//.then(docs => db.putDoc(docs))
+
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
-	.then((doc) => { 
-		console.log('sent')	
-		res.send(doc) 
-			})
-	.catch((err) => {
-		res.send(`Unable to create doc. Error:${err.message}`)
-	})
+	.then((doc) => { res.send(doc) })
+	.catch((err) => { res.send(err.message) })
 })
 
 //flag a doc as deleted
@@ -53,5 +45,6 @@ router.delete('/:shortUrl', (req, res) => {
 		.catch((err) => {console.log(err),res.send(err)});
 	*/
 })
+
 //exports the router
 module.exports = router
