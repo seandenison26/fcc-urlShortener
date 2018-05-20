@@ -40,15 +40,12 @@ router.get('/new/:url(*)', (req, res) => {
 })
 
 //flag a doc as deleted
-router.delete('/:shortUrl', (req, res) => {
-	/*
-	db.delDoc(req.body)
-		.then((newDoc) => {
-			console.log('DELETE SUCCESS')
-			res.send(newDoc)
+router.get('/:short_code', (req, res) => {
+	tasks.checkForCode(req.params.short_code)
+		.then((doc) => {
+			res.redirect(doc.old_url)
 		})
-		.catch((err) => {console.log(err),res.send(err)});
-	*/
+		.catch((err) => {console.log(err),res.send('CODE NOT FOUND')});
 })
 
 //exports the router
