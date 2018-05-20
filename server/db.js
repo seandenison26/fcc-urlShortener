@@ -64,7 +64,7 @@ const addUUID = (objs) => {
 
 //gets view from the db
 const getView = (view, key = null) => {
-	console.log(view,key)
+	console.log('VIEW:',view,'KEY:',key)
 	return new Promise((res,rej) => {
 		queryDB(reqOptions('GET',{},`/_design/short_codes/_view/${view}?key=${key}`))
 			.then(view => { res(view) })

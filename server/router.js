@@ -19,19 +19,26 @@ router.get('/', (req, res) => {
 //
 //currently set up to eventually use Promis.all, currently will just save the first doc
 router.get('/new/:url(*)', (req, res) => {
-	//check to see it's already been added?
-	
 	const url = req.params.url
 
 	Promise.resolve(
 	tasks.checkUrl(url))
-	.then(tasks.checkForUrl(url))	
-	//.then(url => tasks.createShortUrlDoc(url))
-	//.then(docs => db.putDoc(docs))
-
+	.then(checkedUrl => tasks.checkForUrl(checkedUrl))	
+	.then((check) => { 
+			console.log(check)
+			if (check.value._id)  {
+				res.send(tasks.clientDocDisplay(req.headers.host, check.value)) 
+				return Promise.reject(Error('Doc already exsist'))
+			}
+			else {
+				return tasks.createShortUrlDoc(check)}})
+	.then(docs => db.putDoc(docs))
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	.then((doc) => { res.send(doc) })
-	.catch((err) => { res.send(err.message) })
+	.catch((err) => { 
+		console.log('caught',err.message)
+		//res.send(err) 
+	})
 })
 
 //flag a doc as deleted
