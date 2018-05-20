@@ -19,7 +19,7 @@ const checkForUrl = async (url) => {
 		console.log('DOC:',doc.rows.length)
 		if (!doc.error && doc.rows.length < 1) {
 			console.log('url')
-		//	return url  
+			return url  
 		}
 		else {
 			console.log('rows')

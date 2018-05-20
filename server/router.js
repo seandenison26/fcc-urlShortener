@@ -25,10 +25,9 @@ router.get('/new/:url(*)', (req, res) => {
 	tasks.checkUrl(url))
 	.then(checkedUrl => tasks.checkForUrl(checkedUrl))	
 	.then((check) => { 
-			console.log(check)
-			if (check.value._id)  {
-				res.send(tasks.clientDocDisplay(req.headers.host, check.value)) 
-				return Promise.reject(Error('Doc already exsist'))
+			const doc = check.value
+			if (check.value !== undefined && check.value._id)  {
+				return Promise.reject(tasks.clientDocDisplay(req.headers.host, check.value))
 			}
 			else {
 				return tasks.createShortUrlDoc(check)}})
@@ -36,8 +35,7 @@ router.get('/new/:url(*)', (req, res) => {
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	.then((doc) => { res.send(doc) })
 	.catch((err) => { 
-		console.log('caught',err.message)
-		//res.send(err) 
+		res.send(err) 
 	})
 })
 
