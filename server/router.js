@@ -27,7 +27,7 @@ router.get('/new/:url(*)', (req, res) => {
 	.then((check) => { 
 			const doc = check.value
 			if (check.value !== undefined && check.value._id)  {
-				return Promise.reject(tasks.clientDocDisplay(req.headers.host, check.value))
+				return Promise.reject({message: tasks.clientDocDisplay(req.headers.host, check.value)})
 			}
 			else {
 				return tasks.createShortUrlDoc(check)}})
@@ -35,12 +35,13 @@ router.get('/new/:url(*)', (req, res) => {
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	.then((doc) => { res.send(doc) })
 	.catch((err) => { 
-		res.send(err) 
+		res.send(err.message) 
 	})
 })
 
 //flag a doc as deleted
 router.get('/:short_code', (req, res) => {
+	console.log(req.params.short_code)
 	tasks.checkForCode(req.params.short_code)
 		.then((doc) => {
 			res.redirect(doc.old_url)

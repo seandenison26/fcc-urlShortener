@@ -8,10 +8,12 @@ const
 
 const checkUrl = (url) => {
 	const check = new RegExp(/^https?:\/\/[0-9a-zA-Z]+.\S+/)
-	if(check.test(url)) 
+	if(check.test(url)) {
 		return url 
-	else
+	}
+	else {
 		return Promise.reject(Error('INVALID_URL'))
+	}
 }
 
 const checkForUrl = async (url) => {
@@ -24,10 +26,11 @@ const checkForUrl = async (url) => {
 }
 
 const checkForCode = async (code) => {
+		console.log(code)
 		const doc = await db.getView('codes',code)
 		console.log(doc)
-		if (!doc.error && doc.rows.length < 1) {
-			return Error('INVALID_CODE')
+		if (!doc.error && doc.rows.length != 1) {
+			return Promise.reject(Error('INVALID_CODE'))
 		}
 		else {
 			return doc.rows[0].value }
