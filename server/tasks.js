@@ -12,7 +12,7 @@ const checkUrl = (url) => {
 		return url 
 	}
 	else {
-		return Promise.reject(Error('INVALID_URL'))
+		return Promise.reject(Error('error: INVALID_URL'))
 	}
 }
 
@@ -30,7 +30,7 @@ const checkForCode = async (code) => {
 		const doc = await db.getView('codes',code)
 		console.log(doc)
 		if (!doc.error && doc.rows.length != 1) {
-			return Promise.reject(Error('INVALID_CODE'))
+			return Promise.reject(Error('error: INVALID_CODE'))
 		}
 		else {
 			return doc.rows[0].value }

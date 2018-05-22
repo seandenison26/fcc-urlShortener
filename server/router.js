@@ -35,7 +35,7 @@ router.get('/new/:url(*)', (req, res) => {
 	.then(doc => tasks.clientDocDisplay(req.headers.host, doc))
 	.then((doc) => { res.send(doc) })
 	.catch((err) => { 
-		res.send(err.message) 
+		res.send(JSON.stringify(err.message))
 	})
 })
 
